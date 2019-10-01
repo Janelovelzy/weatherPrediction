@@ -14,6 +14,7 @@ buildscript {
 
 allprojects {
     repositories {
+        //jcenter是代码托管仓库
         jcenter()
     }
 }

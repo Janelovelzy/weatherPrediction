@@ -1,5 +1,8 @@
+//这里总共有两种形式可以选择，一个是application，一个是library
+//分别代表应用和库模块
 apply plugin: 'com.android.application'
 
+//android 闭包，可以配置项目构建的各种属性
 android {
     compileSdkVersion 24
     buildToolsVersion "29.0.2"
@@ -11,6 +14,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+    //buildType指定生成相关配置文件的闭包
     buildTypes {
         release {
             minifyEnabled false
@@ -19,6 +24,9 @@ android {
     }
 }
 
+
+//指定当前项目的依赖性
+//一共有三种依赖方式：本地依赖，库依赖和远程依赖
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
