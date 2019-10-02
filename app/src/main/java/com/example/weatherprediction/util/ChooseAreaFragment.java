@@ -3,6 +3,7 @@ package com.example.weatherprediction.util;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import okhttp3.Response;
  * Created by janelove on 2019/9/30.
  */
 
-public class ChooseAreaFragment extends Fragment {
+public class ChooseAreaFragment extends android.support.v4.app.Fragment {
     public static final int LEVEL_PROVINCE = 0;
     public static final int LEVEL_CITY = 1;
     public static final int LEVEL_COUNTY = 2;
@@ -52,17 +53,21 @@ public class ChooseAreaFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //inflate()方法将choose_area布局动态加载进来
+        //获取了一些控件的实例
         View view = inflater.inflate(R.layout.choose_area,container,false);
         titleText = (TextView) view.findViewById(R.id.title_text);
         backbutton = (Button) view.findViewById(R.id.back_button);
         listView = (ListView) view.findViewById(R.id.list_view);
         adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,dataList);
+        //初始化Arrayadapter后将他设置为listview的适配器
         listView.setAdapter(adapter);
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle saveInstanceState) {
+        //为listview和button创建了点击事件
         super.onActivityCreated(saveInstanceState);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,6 +91,7 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
+        //从此处正是开始加载省级数据
         queryProvinces();
     }
 
@@ -102,7 +108,7 @@ public class ChooseAreaFragment extends Fragment {
             listView.setSelection(0);
             currentLevel = LEVEL_PROVINCE;
         } else {
-            String address = "http://guolin.tech/api.china";
+            String address = "http://guolin.tech/api/china";
             queryFromServer(address,"province");
         }
     }
@@ -121,7 +127,7 @@ public class ChooseAreaFragment extends Fragment {
             currentLevel = LEVEL_CITY;
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
-            String address = "http://guolin.tech/api/china" + provinceCode;
+            String address = "http://guolin.tech/api/china/" + provinceCode;
             queryFromServer(address,"city");
         }
     }
@@ -141,14 +147,13 @@ public class ChooseAreaFragment extends Fragment {
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
             int cityCode = selectedCity.getcityCode();
-            String address = "http://guolin.tech/api/china" + provinceCode + "/" + cityCode;
+            String address = "http://guolin.tech/api/china/" + provinceCode + "/" + cityCode;
             queryFromServer(address,"county");
         }
     }
 
     private void queryFromServer(String address, final String type) {
         showProgressDialog();
-        //向服务器发送请求，相应的数据会回调到onRespose()方法中
         HttpUtil.sendOKHttpRequest(address, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -162,13 +167,14 @@ public class ChooseAreaFragment extends Fragment {
                 });
             }
 
+            //向服务器发送请求，相应的数据会回调到onRespose()方法中
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 //responseText记录的是JSON的文本记录
                 String responseText = response.body().string();
-                if (responseText != null && responseText.startsWith("\ufeff")) {
-                    responseText = responseText.substring(1);
-                }
+                Log.d("test",responseText);
+                //String responseText = responseStr.substring(responseStr.indexOf("{"),responseStr.lastIndexOf("}")+1);
+                //String responseText = [{"id":1,"name":"北京"},{"id":2,"name":"上海"}];
                 boolean result = false;
                 if ("province".equals(type)) {
                     result = Utility.handleProvinceResponse(responseText);
@@ -198,6 +204,7 @@ public class ChooseAreaFragment extends Fragment {
         });
     }
 
+    //显示进度对话框
     private void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getActivity());
@@ -207,6 +214,7 @@ public class ChooseAreaFragment extends Fragment {
         progressDialog.show();
     }
 
+    //关闭进度对话框
     private void closeProgressDialog() {
         if (progressDialog != null) {
             progressDialog.dismiss();

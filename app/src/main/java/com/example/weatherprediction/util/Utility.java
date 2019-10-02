@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import com.example.weatherprediction.db.City;
 import com.example.weatherprediction.db.County;
 import com.example.weatherprediction.db.Province;
+import com.example.weatherprediction.gson.Weather;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,9 +22,6 @@ public class Utility {
     public static boolean handleProvinceResponse(String response) {
         if (!TextUtils.isEmpty(response)) {
             try {
-                if (response != null && response.startsWith("\ufeff")) {
-                    response = response.substring(1);
-                }
                 JSONArray allProvinces = new JSONArray(response);
                 for (int i = 0; i < allProvinces.length(); ++i) {
                     JSONObject provinceObject = allProvinces.getJSONObject(i);
@@ -43,9 +42,6 @@ public class Utility {
     public static boolean handleCityResponse(String response,int provinceId) {
         if (!TextUtils.isEmpty(response)) {
             try {
-                if (response != null && response.startsWith("\ufeff")) {
-                    response = response.substring(1);
-                }
                 JSONArray allCities = new JSONArray(response);
                 for (int i = 0; i < allCities.length(); ++i) {
                     JSONObject cityObject = allCities.getJSONObject(i);
@@ -67,9 +63,6 @@ public class Utility {
     public static boolean handleCountyResponse(String response,int cityId) {
         if (!TextUtils.isEmpty(response)) {
             try {
-                if (response != null && response.startsWith("\ufeff")) {
-                    response = response.substring(1);
-                }
                 //将整个JSON实例化保存在jsonObject中
                 JSONArray allcounties = new JSONArray(response);
                 for (int i = 0; i < allcounties.length(); ++i) {
@@ -88,4 +81,20 @@ public class Utility {
         return false;
     }
 
+    /*
+    public static Weather handleWeatherResponse(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            //JSONArray将天气的主体内容解析出来
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            //fromJson()方法将JSON数据转化为Weather对象
+            //GSON方法可以将一段JSON格式的字符串自动映射为一个对象
+            return new Gson().fromJson(weatherContent,Weather.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    */
 }

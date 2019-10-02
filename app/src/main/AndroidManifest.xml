@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!---活动的声明注册都放在application标签中-->
     <application
         android:name="org.litepal.LitePalApplication"
         android:allowBackup="true"
@@ -12,9 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".WeatherPredictionActivity">
+            <!---intent-filter标签内的这两句声明的是主活动-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

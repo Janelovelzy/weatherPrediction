@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class WeatherPredictionActivity extends AppCompatActivity {
 
+    //任何活动都要重写Activity的onCreate()方法
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

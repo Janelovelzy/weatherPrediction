@@ -38,4 +38,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    //在项目中使用开源库的方法：在builid.gradle文件中声明该开源库的引用即可
 }

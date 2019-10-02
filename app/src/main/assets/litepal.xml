@@ -1,8 +1,19 @@
 <litepal>
 
+    <!---
+    //LitePal采用的是对象关系映射的模式，也就是将面向对象的语言和
+    //面向关系的数据库之间建立一种映射关系
+    -->
+
+    <!---指定数据库的名称-->
     <dbname value = "weather_prediction" />
+    <!---指定数据库的版本，在更新的时候要进行修改-->
     <version value = "1" />
 
+    <!---
+    //mapping标签用来声明我们所需要的配置的映射模型类，这里一定要用完整的类名
+    //这样数据库和表会在首次执行任意数据库操作的时候创建
+    -->
     <list>
         <mapping class="com.example.weatherprediction.db.City"/>
         <mapping class="com.example.weatherprediction.db.County"/>
