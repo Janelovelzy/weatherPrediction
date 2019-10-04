@@ -81,7 +81,7 @@ public class Utility {
         return false;
     }
 
-    /*
+
     public static Weather handleWeatherResponse(String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -96,5 +96,4 @@ public class Utility {
         }
         return null;
     }
-    */
 }

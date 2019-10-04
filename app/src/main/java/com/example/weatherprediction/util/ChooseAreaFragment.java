@@ -1,6 +1,7 @@
 package com.example.weatherprediction.util;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,9 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.weatherprediction.R;
+import com.example.weatherprediction.WeatherActicity;
 import com.example.weatherprediction.db.City;
 import com.example.weatherprediction.db.County;
 import com.example.weatherprediction.db.Province;
+import com.example.weatherprediction.gson.Weather;
 
 import org.litepal.crud.DataSupport;
 
@@ -78,6 +81,13 @@ public class ChooseAreaFragment extends android.support.v4.app.Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCounties();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    //通过Intent来触发天气的活动
+                    Intent intent = new Intent(getActivity(), WeatherActicity.class);
+                    intent.putExtra("weather_id",weatherId);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         });
@@ -173,8 +183,6 @@ public class ChooseAreaFragment extends android.support.v4.app.Fragment {
                 //responseText记录的是JSON的文本记录
                 String responseText = response.body().string();
                 Log.d("test",responseText);
-                //String responseText = responseStr.substring(responseStr.indexOf("{"),responseStr.lastIndexOf("}")+1);
-                //String responseText = [{"id":1,"name":"北京"},{"id":2,"name":"上海"}];
                 boolean result = false;
                 if ("province".equals(type)) {
                     result = Utility.handleProvinceResponse(responseText);
