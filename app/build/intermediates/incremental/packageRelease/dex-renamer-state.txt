@@ -1,0 +1,4 @@
+#Tue Jan 14 15:33:28 CST 2020
+base.0=C\:\\Users\\janelove\\Desktop\\WeatherPrediction\\app\\build\\intermediates\\transforms\\dex\\release\\folders\\1000\\1f\\main
+renamed.0=classes.dex
+file.0=C\:\\Users\\janelove\\Desktop\\WeatherPrediction\\app\\build\\intermediates\\transforms\\dex\\release\\folders\\1000\\1f\\main\\classes.dex

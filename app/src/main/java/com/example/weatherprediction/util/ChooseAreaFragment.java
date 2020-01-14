@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.weatherprediction.R;
 import com.example.weatherprediction.WeatherActicity;
+import com.example.weatherprediction.WeatherPredictionActivity;
 import com.example.weatherprediction.db.City;
 import com.example.weatherprediction.db.County;
 import com.example.weatherprediction.db.Province;
@@ -83,11 +84,19 @@ public class ChooseAreaFragment extends android.support.v4.app.Fragment {
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(position).getWeatherId();
-                    //通过Intent来触发天气的活动
-                    Intent intent = new Intent(getActivity(), WeatherActicity.class);
-                    intent.putExtra("weather_id",weatherId);
-                    startActivity(intent);
-                    getActivity().finish();
+                    if (getActivity() instanceof WeatherPredictionActivity) {
+                        //通过Intent来触发天气的活动
+                        Intent intent = new Intent(getActivity(), WeatherActicity.class);
+                        intent.putExtra("weather_id",weatherId);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                    else if (getActivity() instanceof WeatherActicity) {
+                        WeatherActicity acticity = (WeatherActicity) getActivity();
+                        acticity.drawerLayout.closeDrawers();
+                        acticity.swipeRefresh.setRefreshing(true);
+                        acticity.requestWeather(weatherId);
+                    }
                 }
             }
         });

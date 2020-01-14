@@ -2,10 +2,14 @@ package com.example.weatherprediction.util;
 
 import android.content.ContentUris;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.weatherprediction.db.City;
 import com.example.weatherprediction.db.County;
 import com.example.weatherprediction.db.Province;
+import com.example.weatherprediction.gson.Forecast;
+import com.example.weatherprediction.gson.Lifestyle;
+import com.example.weatherprediction.gson.Present;
 import com.example.weatherprediction.gson.Weather;
 import com.google.gson.Gson;
 
@@ -82,11 +86,27 @@ public class Utility {
     }
 
 
-    public static Weather handleWeatherResponse(String response) {
+    public static Present handleWeatherResponse(String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
             //JSONArray将天气的主体内容解析出来
-            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather6");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            Log.d("weather",weatherContent);
+            //fromJson()方法将JSON数据转化为Weather对象
+            //GSON方法可以将一段JSON格式的字符串自动映射为一个对象
+            return new Gson().fromJson(weatherContent,Present.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Weather handleForecastResponse(String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            //JSONArray将天气的主体内容解析出来
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather6");
             String weatherContent = jsonArray.getJSONObject(0).toString();
             //fromJson()方法将JSON数据转化为Weather对象
             //GSON方法可以将一段JSON格式的字符串自动映射为一个对象
@@ -96,4 +116,22 @@ public class Utility {
         }
         return null;
     }
+
+    public static Lifestyle handleLifestyleResponse(String response) {
+        try {
+            Log.d("handling lifestyle",response);
+            JSONObject jsonObject = new JSONObject(response);
+            //JSONArray将天气的主体内容解析出来
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather6");
+            String lifestyleContent = jsonArray.getJSONObject(0).toString();
+            //fromJson()方法将JSON数据转化为Weather对象
+            //GSON方法可以将一段JSON格式的字符串自动映射为一个对象
+            return new Gson().fromJson(lifestyleContent,Lifestyle.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 }

@@ -13,19 +13,12 @@ public class Forecast {
     //针对这种情况，可以只定义出单日天气的实体类，然后在声明实体类引用的时候使用集合类型来进行声明
     public String date;
 
-    @SerializedName("tmp")
-    public Temperature temperature;
+    @SerializedName("tmp_max")
+    public String max;
 
-    @SerializedName("cond")
-    public More more;
+    @SerializedName("tmp_min")
+    public String min;
 
-    public class Temperature{
-        public String max;
-        public String min;
-    }
-
-    public class More {
-        @SerializedName("txt_d")
-        public String info;
-    }
+    @SerializedName("cond_txt_d")
+    public String cond_txt_d;
 }

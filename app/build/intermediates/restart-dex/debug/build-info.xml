@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    api-level="24"
+    density="420dpi"
+    format="8"
+    plugin-version="2.2.0"
+    timestamp="42737787039800"
+    token="-3243412076462507901"
+    verifier="FULL_BUILD_REQUESTED" >
+
+    <task
+        name="javac"
+        duration="539" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="320" />
+    <task
+        name="verifier"
+        duration="128" />
+
+    <artifact
+        location="C:\Users\janelove\Desktop\WeatherPrediction\app\build\outputs\apk\app-debug.apk"
+        type="MAIN" />
+
+    <build
+        timestamp="42737787039800"
+        verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="C:\Users\janelove\Desktop\WeatherPrediction\app\build\outputs\apk\app-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>
